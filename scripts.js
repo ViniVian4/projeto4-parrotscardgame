@@ -27,12 +27,12 @@ listaJogo.sort(comparador);
 
 //-----------------------------------------------
 
-//INSERCAO------------------
+//INSERCAO-----------------------------------------------------------
 
 const jogo = document.querySelector(".game-container");
 for (let i = 0; i < listaJogo.length; i++){
     jogo.innerHTML += 
-        `<div class="carta" onclick="giraCarta(this)">
+        `<div class="carta ${listaJogo[i]}" onclick="descobreCarta(this)">
             <div class="frente face">
                 <img src="./imagens/front.png" alt="">
             </div>
@@ -43,10 +43,36 @@ for (let i = 0; i < listaJogo.length; i++){
         `
 }
 
-//--------------------------
+//-------------------------------------------------------------------
+
+//JOGO---------------------------------------------------------------
+
+let paresDescobertos = 0;
+let cartaAnterior = null;
 
 function giraCarta(carta) {
-    const cartaEscolhida = carta;
-    cartaEscolhida.querySelector(".fundo").style.transform = "rotateY(0deg)";
-    cartaEscolhida.querySelector(".frente").style.transform = "rotateY(-180deg)";
+    carta.querySelector(".fundo").style.transform = "rotateY(0deg)";
+    carta.querySelector(".frente").style.transform = "rotateY(-180deg)";
 }
+
+function desGiraCarta(carta) {
+    carta.querySelector(".fundo").style.transform = "rotateY(-180deg)";
+    carta.querySelector(".frente").style.transform = "rotateY(0deg)";
+}
+
+function descobreCarta(carta) {
+    const cartaEscolhida = carta;
+    if (cartaAnterior == null){
+        giraCarta(cartaEscolhida);
+        cartaAnterior = carta;
+    }
+    else {
+        giraCarta(cartaEscolhida);
+        cartaAnterior = carta;
+        setTimeout(desGiraCarta(carta), 99000);
+        desGiraCarta(cartaEscolhida);
+    }    
+}
+
+//------------------------------------------
+
