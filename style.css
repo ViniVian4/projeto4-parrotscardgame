@@ -87,6 +87,10 @@ body > div > h1 {
     transform: rotateY(180deg);
 }
 
+.pos {
+    display: none;
+}
+
 .carta img {
     width: 100px;
     height: 100px;

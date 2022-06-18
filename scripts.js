@@ -30,6 +30,7 @@ for (let i = 0; i < listaJogo.length; i++){
             <div class="fundo face">
                 <img src="./imagens/${listaJogo[i]}.gif" alt="">
             </div>
+            <div class="pos">${i}</div>
         </div>
         `
 }
@@ -68,7 +69,10 @@ function descobreCarta(carta) {
         giraCarta(cartaEscolhida);
         cartaAnterior = cartaEscolhida;
     }
-    else if (cartasViradas == 1){
+    else if (cartasViradas == 1 && 
+        String(cartaEscolhida.querySelector(".pos").innerHTML) !==
+        String(cartaAnterior.querySelector(".pos").innerHTML)){
+            
         giraCarta(cartaEscolhida);
 
         if (String(cartaEscolhida.querySelector(".fundo").innerHTML) !== 
