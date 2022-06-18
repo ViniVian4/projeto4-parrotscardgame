@@ -7,16 +7,11 @@ const listaDeCartas = [
     "tripletsparrot",
     "unicornparrot"];
 
-let contadorDeCartas;
-do {
+let contadorDeCartas = 0;
+while(contadorDeCartas < 4 || contadorDeCartas > 14 || contadorDeCartas%2 != 0){
     contadorDeCartas = Number(prompt("Digite o número de cartas (de 4 a 14 cartas, deve ser par):"));
-}while((contadorDeCartas < 4 || contadorDeCartas > 14) && contadorDeCartas%2 == 0);
-
-function comparador() { 
-	return Math.random() - 0.5; 
 }
 
-//PARES DE CARTAS--------------------------------
 
 let listaJogo = [];
 for (let i = 0; i < contadorDeCartas/2; i++){
@@ -24,10 +19,6 @@ for (let i = 0; i < contadorDeCartas/2; i++){
     listaJogo.push(listaDeCartas[i]);
 }
 listaJogo.sort(comparador);
-
-//-----------------------------------------------
-
-//INSERCAO-----------------------------------------------------------
 
 const jogo = document.querySelector(".game-container");
 for (let i = 0; i < listaJogo.length; i++){
@@ -39,18 +30,20 @@ for (let i = 0; i < listaJogo.length; i++){
             <div class="fundo face">
                 <img src="./imagens/${listaJogo[i]}.gif" alt="">
             </div>
-         </div>
+        </div>
         `
 }
 
-//-------------------------------------------------------------------
-
-//JOGO---------------------------------------------------------------
+//-----------------------------------------------------------------------------------
 
 let paresDescobertos = 0;
 let cartaAnterior = null;
 let cartasViradas = 0;
 let contadorDeJogadas = 0;
+
+function comparador() { 
+	return Math.random() - 0.5; 
+}
 
 function nulificaCartaAnterior(){
     cartaAnterior = null;
@@ -90,10 +83,28 @@ function descobreCarta(carta) {
     }
     
     if (paresDescobertos == (contadorDeCartas/2)){
-        const alerta = "Você ganhou em " + contadorDeJogadas + " jogadas";
+        const alerta = `Você ganhou em ${contadorDeJogadas} jogadas, em ${tempo} segundos`;
         setTimeout(() => {alert(alerta)}, 1000);
+        clearInterval(idInterval);
+
+        setTimeout(recomecar, 2000);        
     }
 }
 
-//------------------------------------------
+//BONUS---------------------------------------------------------------
+
+let tempo = 0;
+let idInterval = setInterval(contaTempo, 1000);
+
+function contaTempo () {
+    tempo++;
+    document.querySelector(".relogio").innerHTML = `${tempo}s`;
+}
+
+function recomecar (){
+    let r = String(prompt("Gostaria de reiniciar a partida?"));
+    r = r.toLowerCase();
+    if (r === "sim")
+        document.location.reload();
+}
 
